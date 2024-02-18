@@ -9,6 +9,7 @@
     "buffer": "^6.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
@@ -38,6 +39,8 @@
   },
   "proxy": "http://localhost:5000",
   "devDependencies": {
-    "materialize-css": "^1.0.0-rc.2"
+    "autosize": "^6.0.1",
+    "materialize-css": "^1.0.0-rc.2",
+    "react-chat-elements": "^12.0.13"
   }
 }

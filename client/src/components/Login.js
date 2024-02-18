@@ -20,7 +20,12 @@ function Login({setJwt, jwt, setUser}) {
                 console.log(data)
                 if (data.token) {
                     setJwt(data.token)
+                    let id = JSON.parse(atob(data.token.split(".")[1])).id
                     setUser(JSON.parse(atob(data.token.split(".")[1])))
+                    window.location.href = "/user/" + id
+                } else {
+                    let text = document.getElementById("logintext")
+                    text.innerText = data.message
                 }
             })
 
@@ -34,11 +39,26 @@ function Login({setJwt, jwt, setUser}) {
     return (
         <div>
             <h1>Login</h1>
-            <form onSubmit={submit} onChange={handleChange}>
-                <input type="text" name="email"/>
-                <input type='password' name="password"/>
-                <input type="submit" />
-            </form>
+            <div className="row">
+                <form className="col s12" onSubmit={submit} onChange={handleChange}>
+                    <div className="row">
+                        <div className="input-field col s6">
+                            <input id="loginemail" type="email" className="validate" name='email'/>
+                            <label htmlFor="email">Email</label>
+                        </div>
+                        <div className="input-field col s6">
+                            <input id="loginpassword" type="password" className="validate" name='password'/>
+                            <label htmlFor="password">Password</label>
+                        </div>
+                        <div>
+                            <button className="btn waves-effect waves-light">Login
+                                <i className="material-icons right">send</i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <p id='logintext'></p>
         </div>
     )
 }

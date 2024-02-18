@@ -28,6 +28,96 @@
   color: #61dafb;
 }
 
+.default-size {
+  height: 300px;
+  border: none;
+  outline: none;
+  resize: none;
+  overflow: visible;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.button-container > * {
+  margin: 10px;
+}
+
+.split {
+  display: flex;
+}
+
+/* Chat containers, these are from https://www.w3schools.com/howto/howto_css_chat.asp */
+.container {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.container-msg {
+  border-radius: 5px;
+  padding: 10px;
+  width: 50%;
+  height: 10px;
+  margin: auto;
+  
+}
+
+/* Darker chat container */
+.darker {
+  border-color: #ccc;
+  background-color: #ddd;
+}
+
+/* Clear floats */
+.container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+
+/* Style time text */
+.time-right {
+  float: right;
+  clear: both;
+  color: #aaa;
+}
+
+/* Style time text */
+.time-left {
+  float: left;
+  color: #999;
+  clear: both;
+}
+
+.p-left {
+  float:left
+}
+
+.p-right {
+  float: right;
+}
+
+.title-left {
+  float: left;
+  margin-right: 20px;
+  margin-left:0;
+  font-weight: bold;
+}
+
+.title-right {
+  float: right;
+  margin-left: 20px;
+  margin-right:0;
+  font-weight: bold;
+}
+
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

@@ -1,52 +1,29 @@
 import './App.css';
+import AppBar from './components/AppBar';
 import Browse from './components/Browse';
 import Chatview from './components/Chatview';
 import Login from './components/Login';
 import Profile from './components/Profile';
 import Register from "./components/Register"
-import { useState } from 'react';
+import Error from "./components/Error"
+import LoggedOut from './components/LoggedOut';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 
+
+// The structure of the App with react-router
+
 function App() {
-
-  const [jwt, setJwt] = useState("")
-  const [user, setUser] = useState({})
-  //const [userName, setUsername] = useState("")
-
-  /*useEffect(() => {
-    try {
-      if (jwt && user.email) {
-        async function getName() {
-          let response = await fetch("/users/" + user.email)
-          let data = await response.json()
-          return data.name
-        }
-        getName()
-        .then((name) => setUsername(name))
-      }
-    } catch(err) {
-      console.log(err)
-    }
-    
-  }, [jwt, user.email])*/
-
 
   return (
     <Router>
       <div className="App">
-        {/*<h1>{jwt ? `Hi ${userName}` :""}</h1>
-        <Profile></Profile>
-        <Register></Register>
-        {!user?.id?.length > 0 &&
-        <Login setJwt={setJwt} setUser={setUser} jwt={jwt}></Login>
-        }*/}
-        {/*<h1>{jwt ? `Hi ${userName}` :""}</h1>,*/}
-
-        <Routes>
-          <Route path="/" element={[<Register></Register>, <Login setJwt={setJwt} setUser={setUser} jwt={jwt}></Login>]}></Route>
-          <Route path="/user/:id" element={<Profile></Profile>}> </Route>
-          <Route path="/browse/:id" element={<Browse></Browse>}> </Route>
-          <Route path="/chat/:id" element={<Chatview></Chatview>}></Route>
+        <Routes> 
+          <Route path="/" element={[<AppBar></AppBar>, <Register></Register>, <Login></Login>]}></Route>
+          <Route path="/user/:id" element={[<AppBar></AppBar>, <Profile></Profile>]}> </Route>
+          <Route path="/browse/:id" element={[<AppBar></AppBar>, <Browse></Browse>]}> </Route>
+          <Route path="/chat/:id" element={[<AppBar></AppBar>, <Chatview></Chatview>]}></Route>
+          <Route path="/error" element={[<AppBar></AppBar>, <Error></Error>]}></Route>
+          <Route path="/logout" element={[<AppBar></AppBar>, <LoggedOut></LoggedOut>]}></Route>
         </Routes>
       </div>
     </Router>

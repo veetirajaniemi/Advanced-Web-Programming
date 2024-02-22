@@ -1,18 +1,14 @@
 const jwt = require("jsonwebtoken");
 
+
+// Authenticating the user with HTTP-cookie 
 module.exports = function(req, res, next) {
-    const authHeader = req.headers["authorization"];
-    let token;
-    if (authHeader) {
-        token = authHeader.split(" ")[1];
-    } else {
-        token = null;
-    }
-    if (token == null) return res.sendStatus(401);
-    console.log("Token found");
+
+    const token = req.cookies.jwt // Getting token from the cookie
+    if (token == null) return res.json({message: "Authentication failed."});
     
-    jwt.verify(token, process.env.SECRET, (err, user) => {
-        if (err) return res.sendStatus(401);
+    jwt.verify(token, process.env.SECRET, (err, user) => { // Verifying the cookie
+        if (err) return res.json({message: "Authentication failed."});
         req.user = user;
         next();
     })

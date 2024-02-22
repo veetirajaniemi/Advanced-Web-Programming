@@ -2,6 +2,8 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 
+/* The profile page of user include the profile card of the user which's
+    text can be modified */
 
 function Profile() {
 
@@ -9,35 +11,37 @@ function Profile() {
     const [userName, setUserName] = useState("")
     const [userBio, setUserBio] = useState("")
 
+
+    // Updating text area's size based on profile text. 
     const updateTextArea = () => {
         let textArea = document.getElementById("profiletext")
         textArea.style.height = 'auto'
         textArea.style.height = textArea.scrollHeight + 'px'
     }
 
+    // Fetching the name and profile text of current user
     useEffect(() => {
-        console.log("id: ", id)
         fetch("/users/profile/" + id)
             .then(response => response.json())
             .then(data => {
-                console.log(data)
-                console.log("Nimi: ", data.name)
-                console.log("Bio: ", data.bio)
+                if (data.message === "Authentication failed.") {
+                    window.location.href = "/error"
+                } 
                 setUserName(data.name)
                 if (data.bio) {
                     setUserBio(data.bio)
-                    //updateTextArea()
                 }
             })
     }, [])
 
+    // Updating new bio to the database
     const updateBio = () => {
         let textArea = document.getElementById("profiletext")
         let bioText = textArea.value
         setUserBio(bioText)
         updateTextArea()
         
-        fetch("/users/bio/" + id, {
+        fetch("/users/profile/" + id, {
             method: "POST",
             headers: {
                 "Content-type": "application/json"
@@ -47,7 +51,9 @@ function Profile() {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data)
+            if (data.message === "Authentication failed.") {
+                window.location.href = "/error"
+            } 
             let infoP = document.getElementById("profileinfo")
             infoP.innerText = data.info
         })
@@ -58,42 +64,41 @@ function Profile() {
 
     return (
     <div>
-        <div className="row">
-            <div className="col s12 m6">
-                <div className="card pink">
-                    <div className="card-content white-text">
-                        <span id="profiletitle" className="card-title">{userName}</span>
-                        <div className="row">
-                            <form className="col s12">
-                                <div className="row s5">
-                                    <div className="input-field col s12">
-                                        <textarea onChange={(e) => setUserBio(e.target.value)} id="profiletext" className="default-size" value={userBio} maxLength={500} placeholder="Write your profile text here (max 500 characters):"></textarea>
-                                        <label htmlFor="profiletext"></label>
-                                    </div>
+        <h1 className='subheader'>Your profile</h1>
+        <div className="row container">
+            <div className="card pink">
+                <div className="card-content white-text pink lighten-2">
+                    <span id="profiletitle" className="card-title">{userName}</span>
+                    <div className="row">
+                        <form className="col s12">
+                            <div className="row s5">
+                                <div className="input-field col s12">
+                                    <textarea onChange={(e) => setUserBio(e.target.value)} id="profiletext" className="default-size" value={userBio} maxLength={500} placeholder="Write your profile text here (max 500 characters):"></textarea>
+                                    <label htmlFor="profiletext"></label>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <p id="profileinfo"></p>
-                <button onClick={updateBio} className="btn waves-effect waves-light purple lighten-2" name="action">Update profile!
-                    <i className="material-icons right">edit</i>
-                </button>
-                <br></br>
-                <br></br>             
-                <Link to={`/browse/${id}`}>
-                    <button className="btn waves-effect waves-light purple lighten-2">Browse other users!
-                        <i className="material-icons right">search</i>
-                    </button>
-                </Link>
-                <br></br>
-                <br></br>
-                <Link to={`/chat/${id}`}>
-                <button className="btn waves-effect waves-light purple lighten-2">Chat
-                        <i className="material-icons right">chat</i>
-                    </button>                    
-                </Link>
             </div>
+            <p id="profileinfo"></p>
+            <button onClick={updateBio} className="btn waves-effect waves-light purple lighten-2" name="action">Update profile!
+                <i className="material-icons right">edit</i>
+            </button>
+            <br></br>
+            <br></br>             
+            <Link to={`/browse/${id}`}>
+                <button className="btn waves-effect waves-light purple lighten-2">Browse other users!
+                    <i className="material-icons right">search</i>
+                </button>
+            </Link>
+            <br></br>
+            <br></br>
+            <Link to={`/chat/${id}`}>
+            <button className="btn waves-effect waves-light purple lighten-2">Chat
+                    <i className="material-icons right">chat</i>
+                </button>                    
+            </Link>
         </div>
     </div>
     )

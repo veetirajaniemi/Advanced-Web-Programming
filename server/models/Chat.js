@@ -1,10 +1,12 @@
+// Model to include chats between 2 users
+
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 let chatSchema = new Schema({
-    users: [String],
+    users: [String], // user ids of the chat's users
     messages: [{
-        user: String,
+        user: String, // sender of message
         msg: String,
         time: String
     }]

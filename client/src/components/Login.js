@@ -1,9 +1,12 @@
 import {useState} from 'react'
 
+// Login view shown on the main page
 
-function Login({setJwt, jwt, setUser}) {
+function Login() {
     const [userData, setUserData] = useState({})
-
+    
+    /* Logging in when the login button is clicked and
+    fetching jsonwebtoken which is used for authentication.  */
     const submit = (e) => {
         e.preventDefault()
 
@@ -13,17 +16,15 @@ function Login({setJwt, jwt, setUser}) {
                 "Content-type": "application/json"
             },
             body: JSON.stringify(userData),
+            credentials: 'include',
             mode: "cors"
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data)
-                if (data.token) {
-                    setJwt(data.token)
+                if (data.token) { // Login complete, redirect to user's profile page
                     let id = JSON.parse(atob(data.token.split(".")[1])).id
-                    setUser(JSON.parse(atob(data.token.split(".")[1])))
                     window.location.href = "/user/" + id
-                } else {
+                } else { // Login failed, showing info message
                     let text = document.getElementById("logintext")
                     text.innerText = data.message
                 }
@@ -33,12 +34,11 @@ function Login({setJwt, jwt, setUser}) {
  
     const handleChange = (e) => {
         setUserData({...userData, [e.target.name]: e.target.value})
-
     }
 
     return (
         <div>
-            <h1>Login</h1>
+            <h1 className='subheader'>Login</h1>
             <div className="row">
                 <form className="col s12" onSubmit={submit} onChange={handleChange}>
                     <div className="row">
@@ -51,8 +51,8 @@ function Login({setJwt, jwt, setUser}) {
                             <label htmlFor="password">Password</label>
                         </div>
                         <div>
-                            <button className="btn waves-effect waves-light">Login
-                                <i className="material-icons right">send</i>
+                            <button className="btn waves-effect waves-light purple lighten-2">Login
+                                <i className="material-icons right"></i>
                             </button>
                         </div>
                     </div>

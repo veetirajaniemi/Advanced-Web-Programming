@@ -15,5 +15,8 @@
   "license": "ISC",
   "dependencies": {
     "concurrently": "^8.2.2"
+  },
+  "devDependencies": {
+    "materialize-css": "^1.0.0"
   }
 }

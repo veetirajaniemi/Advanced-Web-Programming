@@ -1,1 +1,1 @@
-This repository contains a Tinder clone application. The project work is for a university course Advanced Web Applications. 
+This repository contains a Tinder clone application. The project is for a university course Advanced Web Applications. Installation and testing instructions with a user manual can be found from the project documentation file. 
